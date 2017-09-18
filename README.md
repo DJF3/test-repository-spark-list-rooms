@@ -1,7 +1,7 @@
 
-Cisco Spark - List rooms Python
+Cisco Spark - List spaces Python
 
-# Step 1. List Your Spark Rooms
+## Step 1. List Your Spark Spaces
 Copy/paste the following code to your script. It imports the required modules
 
 ```python
@@ -10,32 +10,38 @@ import json
 import requests
 ```
 
-> **NOTE**: The “```# coding=utf-8```” handles special characters in room names
+> **NOTE**: The “```# coding=utf-8```” handles special characters in space names
 
-Then copy/paste the Personal Access Token variables and put your token in it.
+
+## Step 2. set the Personal Access Token variable
+and update your token.
 ```python
 myToken="YOUR_PERSONAL_ACCESS_TOKEN_HERE"
 myToken="Bearer "+myToken
 ```
+
 The token send to Spark has the format "Bearer XjY3ZMD…", added in the 2nd line above
-Add this function (a collection of code that can re-used) that lists all of your rooms when called with 1 parameter:  your Token. 
+
+
+## Step 3. function to get your space data.
+Add this function (a collection of code that can re-used) that lists all of your spaces when called with 1 parameter:  your Token. 
 ```python
-def get_rooms(mytoken):
+def get_spaces(mytoken):
 	# The header is send to authenticate
 	header = {'Authorization':mytoken, 'content-type':'application/json'}
 	# Send GET request with above header, put result in 'result'
 	result=requests.get(url='https://api.ciscospark.com/v1/rooms',headers=header)
 	# Encode 'result' as JSON
 	JSONresponse = result.json()
-	# Create an Array for all rooms: ('room1','room2','room3')
-	roomlist_array = []
+	# Create an Array for all spaces: ('space1','space2','space3')
+	spacelist_array = []
 	# For each item in the JSON data
-	for EachRoom in JSONresponse['items']:
-		# add the 'title' + 'room ID' to the roomlist_array
-		roomlist_array.append(EachRoom.get('title') +
-						' ** ' + EachRoom.get('id'))
+	for EachSpace in JSONresponse['items']:
+		# add the 'title' + 'space ID' to the spacelist_array
+		spacelist_array.append(EachSpace.get('title') +
+						' ** ' + EachSpace.get('id'))
 	# Return the list of members
-	return roomlist_array
+	return spacelist_array
 ```
 
 
@@ -51,24 +57,28 @@ Sample JSON response after GET request:
     }]
 }
 ```
-Next add this code that executes the get_rooms function and print a list of my rooms:
+
+## Step 4. Printing the results
+Next add this code that executes the get_spaces function and print a list of my spaces
+
 ```python
-# Execute get_rooms and put result in 'SparkResult'
-SparkResult = get_rooms(myToken)
+# Execute get_spaces and put result in 'SparkResult'
+SparkResult = get_spaces(myToken)
 # Loop through the SparkResult array
-for room in SparkResult:
-	# print room name
-	print ("> Room:", room)
-# Print the number of rooms (length of SparkResult array)
-print ("----- TOTAL Room Count:", len(SparkResult))
+for space in SparkResult:
+	# print space name
+	print ("> Space:", space)
+# Print the number of spaces (length of SparkResult array)
+print ("----- TOTAL Space Count:", len(SparkResult))
 ```
 
 Execute the code by clicking "RUN" and look at the output. It should look something like this: 
+
 ```
-> Room: API doc team  ** YU21ZiMjYtZjN1ZigxYjDk2TAcGFyMDcx1ZiMWU21ZiMjYtZjN1ZigxYjBmNDk2
-> Room: Customer ABC ** YAcGFyMDcx1ZiMWU21ZiMjYtZjN1ZigxYjBmNDk2Y2zcazovcGFyL1JPcGFyTlhO
-> Room: Team planning ** Y2l1Zi29zcGFyazovcGFyL1JPcGFyTTcx1ZiMWU21ZiMjYtZjN1ZigxYjBmNDk2
+> Space: API doc team  ** YU21ZiMjYtZjN1ZigxYjDk2TAcGFyMDcx1ZiMWU21ZiMjYtZjN1ZigxYjBmNDk2
+> Space: Customer ABC ** YAcGFyMDcx1ZiMWU21ZiMjYtZjN1ZigxYjBmNDk2Y2zcazovcGFyL1JPcGFyTlhO
+> Space: Team planning ** Y2l1Zi29zcGFyazovcGFyL1JPcGFyTTcx1ZiMWU21ZiMjYtZjN1ZigxYjBmNDk2
 ```
 
-> **NOTE** that this code will only return a maximum of 100 rooms. This is the default max of the Spark API unless you specify the Max parameter (see list rooms documentation) 
+> **NOTE** that this code will only return a maximum of 100 spaces. This is the default max of the Spark API unless you specify the Max parameter (see list spaces documentation) 
 
