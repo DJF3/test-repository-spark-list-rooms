@@ -84,3 +84,5 @@ Execute the code by clicking "RUN" and look at the output. It should look someth
 
 
 **NEXT LAB** [click here](http://gsx-clust-external-12qq4jfx2i278-442547460.us-west-1.elb.amazonaws.com:5555/tutorial?tut=https://github.com/JockDaRock/Time2Code/blob/master/QuickCodeTutorial.md?raw=True)
+
+What happend to the hyperlink above?
